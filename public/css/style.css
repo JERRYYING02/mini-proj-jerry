@@ -1,0 +1,192 @@
+body 
+{
+  position: relative;
+  font-family: 'Wix Madefor Display', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Adjust opacity */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../images/photo-1542273917363-3b1817f69a2d.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.9; 
+  z-index: -1;
+}
+@media (max-width: 767px) {
+  .wrapper {
+    flex-direction: column; /* Stack elements vertically on small screens */
+    align-items: center; /* Center align elements in the wrapper */
+  }
+
+  /* Adjust the title box for small screens */
+  .title-box {
+    margin-right: 0; /* Remove right margin */
+  }
+
+  /* Adjust the search bar for small screens */
+
+
+}
+
+
+.search-bar {
+  width:100%;
+  margin-top: 20px; /* Reduce top margin for spacing */
+  max-width: 100%; /* Allow the search bar to take full width */
+  padding: 0 1rem; /* Adjust padding for smaller screens */
+ 
+}
+
+#title-heading {
+
+  border-radius: 20px;
+  background:url("../images/texture-wooden-boards_1249-169.avif");
+  background-size: cover;
+  background-position: top;
+  text-align: center;
+  margin: 1rem; 
+  padding: 1rem ;
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
+  
+}
+
+.article-box {
+  margin: 3rem 0 2rem 0;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  
+}
+
+.news-carousel {
+  
+
+  margin-bottom: 20px;
+}
+
+.news-item {
+  background: #f5f5f5; /* Background color */
+  border: 1px solid #ddd; /* Border */
+  padding: 3px 3px 3px 3px;
+  width: 100%;
+  
+}
+
+.card
+{
+  background: none;
+  border: none;
+  width: 90%;
+  margin: 0 auto auto auto;
+  
+}
+
+.card-content-text p
+{ 
+  text-align:center;
+  padding: 20px 20px 20px 20px;
+ 
+}
+
+.card-content-text iframe
+{
+  margin-top: 20px;
+  max-width: 50%;
+  
+}
+.card-content-text img
+{
+  margin-top: 20px;
+  max-width: 50%;
+  
+}
+
+.form-select
+{
+  width: 20%;
+  margin-bottom: 20px;
+}
+
+
+.card-box
+{
+  margin-bottom: 90px;
+  
+}
+
+.card-body
+{
+  background-color: rgb(255, 215, 154);
+  border-color: #000000;
+  border-width: 2px;
+  border-radius: 20px;
+  border-style: solid;
+}
+
+.card-title
+{
+  text-align: center;
+  font-weight: bolder;
+}
+
+.less-transparent 
+{
+  border-radius: 20px;
+  background:url("../images/texture-wooden-boards_1249-169.avif");
+  background-size: cover;
+  background-position: bottom;
+  margin: 1rem; 
+  padding: 3rem  ;
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
+}
+
+a {
+  text-decoration: none; /* Remove underline */
+  color: #0048b5; /* Change text color to a desired color (e.g., blue) */
+  /* Add more styles as needed */
+  /* text-decoration: none; */
+}
+
+.btn-read:hover {
+  background-color: #16db65;
+  transition: background-color 2s ease;
+}
+
+.btn-primary {
+  background-color: #7cdb168f;
+  border: none;
+}
+
+/* login and sign up labels */
+label 
+{
+  color: white;
+}
+
+.note-editor {
+  background-color: #ffffff !important;
+
+  
+}
+
+.note-editor iframe {
+  width: 100%;
+
+}
+
+.spam-animation {
+  animation: spamAnimation 0.2s infinite alternate;
+}
+
