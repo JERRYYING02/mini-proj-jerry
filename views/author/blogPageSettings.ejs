@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <div>
+      <%- include('../partials/header') %>
+      <div class="container wrapper " style="border-radius: 40px; background-color: rgba(0, 0, 0, 0.06);">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="title-box">
+              <h1 id="title-heading">My Profile</h1>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <form onsubmit="postBlogSettings()">
+           <div class="mb-3">
+            
+            <label for="blog-subtitle" class="form-label  text-light   fw-bold">Welcome,  </label>
+                  <p class="text-white"  > <%= username %> </p>
+            
+              </div>
+              <div class="mb-3">
+                <label for="blog-subtitle" class="form-label text-light fw-bold">Tell us about yourself !</label>
+                <textarea
+                  class="form-control align-self-start"
+                  id="blog-subtitle"
+                  placeholder="Your Biography"
+                  required
+                ><%= userBio %>
+              </textarea>
+              </div>
+              
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Save & continue</button>
+                <a href="/author" class="mx-2 btn btn-secondary ">Back</a>
+              </div>
+            </form>
+
+            <div class="mb-3">
+              <button onclick="logout()" class="btn btn-danger">Logout</button>
+            </div>
+        </div>
+          <script>
+            // update blog settings to server
+            function postBlogSettings(){
+  
+              const blog_subtitle = document.getElementById('blog-subtitle').value;
+              // const blog_author = document.getElementById('blog-author').value;
+              const blogSettings = {
+               blog_subtitle
+              };
+              // axios for posting request
+              axios
+                .put('/author/blogPageSettings', { ...blogSettings })
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+
+
+                });
+            };
+
+            function logout() {
+              axios.get('/author/logout')
+                .then(response => {
+                  // Redirect to the login page 
+                  window.location.href = '/author/login';
+                  alert('You are logged out . Redirecting...');
+                })
+                .catch(error => {
+                  console.error(error);
+
+                });
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html> 
+
+
+
+  
+</html> 
+
+
