@@ -216,4 +216,46 @@ router.delete('/article/:article_id/comment/:comment_id/delete', (req, res) => {
   });
 });
 
+// Emoji article functionality
+router.put('/article/:article_id/emoji/:emoji', (req, res) => {
+  const article_id = req.params.article_id;
+  const emoji = req.params.emoji;
+
+  db.query('SELECT * FROM articles WHERE article_id = ?', [article_id], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error getting article' });
+    } else if (result.length === 1) {
+      const article = result[0];
+      let emojiTypeCounter;
+      let emojiValue;
+
+      //differentiate emoji types
+      switch (emoji) {
+        case 'love':
+          emojiTypeCounter = 'emoji_love_counter';
+          emojiValue = article.emoji_love_counter +1;
+          break;
+        case 'haha':
+          emojiTypeCounter = 'emoji_haha_counter';
+          emojiValue = article.emoji_haha_counter +1;
+          break;
+        default:
+          res.status(400).json({ message: 'Invalid emoji' });
+          return;
+      }
+
+      db.query(`UPDATE articles SET ${emojiTypeCounter} = ? WHERE article_id = ?`, [emojiValue, article_id], (err) => {
+        if (err) {
+          res.status(500).json({ message: 'Error updating emoji counter' });
+        } else {
+          res.json({ message: 'Emoji reacted successfully' });
+        }
+      });
+    } else {
+      res.status(404).json({ message: 'Article not found' });
+    }
+  });
+});
+
 module.exports = router;
