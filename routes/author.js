@@ -297,4 +297,26 @@ router.put('/article/:article_id/:action', (req, res) => {
   });
 });
 
+// Delete articles
+router.delete('/article/:article_id', (req, res) => {
+  const article_id = req.params.article_id;
+
+  db.query('DELETE FROM article_comments WHERE article_id = ?', [article_id], (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error deleting article comments' });
+    } else {
+      db.query('DELETE FROM articles WHERE article_id = ?', [article_id], (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Error deleting article' });
+        } else {
+          res.json({ message: 'Article successfully deleted' });
+        }
+      });
+    }
+  });
+});
+
+
 module.exports = router;
