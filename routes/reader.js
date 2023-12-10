@@ -50,4 +50,35 @@ router.get('/', (req, res) => {
     });
 });
 
+
+router.get('/about', (req, res) => {
+  res.render('reader/aboutPage.ejs');
+});
+
+// Getting published articles and implementing search tag filter functionality
+router.get('/articles', (req, res) => {
+  const tag = req.query.tag; // Get the selected tag from query 
+
+  // Construct the SQL query to retrieve articles with the selected tag
+  let query = "SELECT * FROM articles WHERE article_status = ?";
+  let params = 1; // By default is get published articles
+
+  if (tag) {
+    query += " AND article_tags LIKE ?";
+    params.push(`%${tag}%`);
+  }
+
+  query += " ORDER BY article_published_time DESC";
+
+  db.query(query, params, (err, articles) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving articles' });
+    } else {
+      res.render('reader/mainReader.ejs', { articles });
+    }
+  });
+});
+
+
 module.exports = router;
