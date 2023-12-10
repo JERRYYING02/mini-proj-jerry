@@ -213,5 +213,30 @@ router.put('/blogPageSettings', (req, res) => {
   );
 });
 
+// Create new article
+router.get('/createNewArticle', (req, res) => {
+  res.render('author/createNewArticle', {});
+});
+
+router.post('/createNewArticle', (req, res) => {
+  const { article_title, article_subtitle, article_content, article_tags } = req.body;
+
+  const username = req.session.user.username;
+
+  db.query(
+    'INSERT INTO articles (article_title, article_subtitle, article_content, article_author, article_tags) VALUES (?, ?, ?, ?, ?)',
+    [article_title, article_subtitle, article_content, username, article_tags],
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error creating article' });
+      } else {
+        res.json({ message: 'Article successfully created' });
+      }
+    }
+  );
+});
+
+
 
 module.exports = router;
