@@ -102,4 +102,39 @@ router.get('/profile/:username', (req, res) => {
   });
 });
 
+//get individual articles,get comments and article visits
+router.get('/article/:article_id', (req, res) => {
+  const article_id = req.params.article_id;
+
+  // Increment article visits by 1
+  db.query('UPDATE articles SET article_visits = article_visits + 1 WHERE article_id = ?', [article_id], (err) => {
+    if (err) {
+      console.error(err);
+    }
+    // get article information
+    db.query('SELECT * FROM articles WHERE article_id = ?', [article_id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error retrieving article' });
+      } else if (result.length === 1) {
+        const article = result[0];
+
+        // Retrieve comments
+        db.query('SELECT * FROM article_comments WHERE article_id = ? ORDER BY comment_created_time DESC', [article_id], (err, comments) => {
+          if (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Error retrieving comments' });
+          } else {
+            res.render('reader/article', { article, comments });
+          }
+        });
+      } else {
+        res.status(404).json({ message: 'Article not found' });
+      }
+    });
+  });
+});
+
+
+
 module.exports = router;
