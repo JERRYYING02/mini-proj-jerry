@@ -99,5 +99,74 @@
     </div>
   </div>
   <%- include('../partials/footer') %>
+
+  <script>
+    // Function for filter articles by tag
+    function filterArticlesByTag() {
+      var selectedTag = document.getElementById('article-tags-select').value;
+      var articleCards = document.getElementsByClassName('card-box');
+
+      for (var i = 0; i < articleCards.length; i++) {
+        var tags = articleCards[i].getAttribute('data-tags');
+        if (selectedTag === '' || tags === selectedTag) {
+          articleCards[i].style.display = 'block';
+        } else {
+          articleCards[i].style.display = 'none';
+        }
+      }
+    }
+
+    // Function to handle article search
+    function handleSearch() {
+      const searchInput = document.getElementById('search-input').value.toLowerCase();
+      const articleCards = document.querySelectorAll('.card-box');
+
+      articleCards.forEach((card) => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+
+        if (title.includes(searchInput)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Attach the handleSearch function to the input event for real-time filtering
+    document.getElementById('search-input').addEventListener('input', handleSearch);
+
+    // Function for pagination
+    document.addEventListener('DOMContentLoaded', () => {
+      // Number of cards to display per page
+      const cardsPerPage = 6;
+      // Current page (initialize to the first page)
+      let currentPage = 1;
+
+      // Function to display the cards for the specified page
+      function displayPage(page) {
+        const cardContainer = document.getElementById('card-container');
+        const allCards = cardContainer.querySelectorAll('.card-box');
+
+        allCards.forEach((card, index) => {
+          if (index < page * cardsPerPage) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // Initial page load
+      displayPage(currentPage);
+
+      // "Load More" button click event
+      document.getElementById('load-more-button').addEventListener('click', () => {
+        currentPage++; // Increment the current page
+        displayPage(currentPage);
+      });
+
+      
+    });
+  </script>
 </body>
 </html>
