@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
     });
 });
 
-
+//get about page
 router.get('/about', (req, res) => {
   res.render('reader/aboutPage.ejs');
 });
@@ -148,7 +148,6 @@ router.put('/article/:article_id/like', (req, res) => {
     } else if (result.length === 1) {
       const article = result[0];
       const likes = article.article_likes+1;
-
       db.query('UPDATE articles SET article_likes = ? WHERE article_id = ?', [likes, article_id], (err) => {
         if (err) {
           console.error(err);

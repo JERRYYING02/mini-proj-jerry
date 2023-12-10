@@ -39,15 +39,18 @@
            
 
             <div class="btn-group" role="group">
-              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" onclick="likeArticle(<%= article.article_id %>)">
+              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" 
+                onclick="likeArticle(<%= article.article_id %>)">
                 <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                 <span class="badge text-bg-warning"><%= article.article_likes %></span>
               </a>
-              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" onclick="emojiArticle('love')">
+              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" 
+                onclick="emojiArticle('love')">
                 <i class="fa fa-heart" aria-hidden="true"></i>
                 <span class="badge text-bg-warning"><%= article.emoji_love_counter %></span>
               </a>
-              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" onclick="emojiArticle('haha')">
+              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" 
+                onclick="emojiArticle('haha')">
                 <i class="fa fa-smile-o" aria-hidden="true"></i>
                 <span class="badge text-bg-warning"><%= article.emoji_haha_counter %></span>
               </a>

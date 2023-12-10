@@ -19,7 +19,6 @@ CREATE TABLE IF NOT EXISTS articles (
     article_status TEXT NOT NULL DEFAULT 'Draft',
     article_tags TEXT NOT NULL,
     article_visits INTEGER NOT NULL DEFAULT 0,
-    article_read_time INTEGER NOT NULL DEFAULT 0,
     username TEXT,
     FOREIGN KEY (username) REFERENCES users(username)
 );

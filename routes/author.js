@@ -27,6 +27,11 @@ router.use(
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      maxAge: 3600000, //1 hour 
+    },
   })
 );
 // check if the user is authenticated
