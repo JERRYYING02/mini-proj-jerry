@@ -62,6 +62,77 @@
               <a href="/" class="btn btn-primary" >Back</a>
             </div>
 
+             <!-- comment accordion -->
+            <div class="accordion my-3" id="comment-form-accordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="comment-form-heading">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#comment-form-collapse" aria-expanded="true" aria-controls="comment-form-collapse">
+                    Comment
+                  </button>
+                </h2>
+                <div id="comment-form-collapse" class="accordion-collapse collapse hide" aria-labelledby="comment-form-heading" data-bs-parent="#comment-form-accordion">
+                  <div class="accordion-body">
+                    <form onsubmit="postComment(<%= article.article_id %>)">
+                      <div class="mb-3">
+                        <label for="comment-name" class="form-label">Your name</label>
+                        <input type="text" class="form-control" id="comment-name" placeholder="Your name" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="comment-text" class="form-label">Comment</label>
+                        <textarea class="form-control" id="comment-text" rows="3" placeholder="Your comment" required></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+             <!-- comment list -->
+            <div class="comment-list mt-3">
+              <ul class="list-group list-group-flush">
+                <% comments.forEach(comment => { %>
+                <li class="list-group-item" style="background-color: wheat;">
+                  <div class="d-flex flex-column flex-lg-row align-items-center">
+                    <div class="ms-2 me-auto w-75">
+                      <div class="fw-bold"><%= comment.comment_name %></div>
+                      <%= comment.comment_content %>
+                    </div>
+                    <div class="btn-group w-30 mx-w-100 align-self-start my-3" role="group">
+                      <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark btn-sm" style="background-color: #7cdb168f;" data-comment-id="<%= comment.comment_id %>" onclick="likeComment(<%= comment.comment_id %>)">
+                        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                        <span class="badge text-bg-warning"><%= comment.comment_likes %></span>
+                      </a>
+                      <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteComment" onclick="deleteComment(<%= comment.comment_id %>)">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            </article>
+            
+          <!-- modal for delete confirm -->
+
+          <div class="modal fade" id="deleteComment" tabindex="-1" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="deleteCommentLabel">Delete Comment</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Do you confirm to delete this comment?</p>
+                </div>
+                <div class="modal-footer">
+                  <a class="btn btn-danger" id="delete-comment-confirm-btn">Delete</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
     <%- include('../partials/footer') %>
