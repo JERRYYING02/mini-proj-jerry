@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <div class="container wrapper" style="border-radius: 40px; background-color: rgba(0, 0, 0, 0.06);">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="title-box">
+          <h1 id="title-heading">User Profile</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="mb-3">
+          <label for="user-bio" class="form-label text-light fw-bold">Username:</label>
+          <p class="text-white"><%= username %></p>
+        </div>
+        <div class="mb-3">
+          <label for="user-bio" class="form-label text-light fw-bold">About:</label>
+          <p class="text-white"><%= bio %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>
