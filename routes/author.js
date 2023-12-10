@@ -237,6 +237,38 @@ router.post('/createNewArticle', (req, res) => {
   );
 });
 
+// Edit article
+router.get('/editArticle/:article_id', (req, res) => {
+  const article_id = req.params.article_id;
 
+  db.query('SELECT * FROM articles WHERE article_id = ?', [article_id], (err, article) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving article' });
+    } else {
+      res.render('author/editArticle', {
+        article: article[0],
+      });
+    }
+  });
+});
+
+router.put('/editArticle/:article_id', (req, res) => {
+  const article_id = req.params.article_id;
+  const { article_title, article_subtitle, article_content } = req.body;
+
+  db.query(
+    'UPDATE articles SET article_title = ?, article_subtitle = ?, article_content = ?, article_last_modified = CURRENT_TIMESTAMP WHERE article_id = ?',
+    [article_title, article_subtitle, article_content, article_id],
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error updating article' });
+      } else {
+        res.json({ message: 'Article successfully updated' });
+      }
+    }
+  );
+});
 
 module.exports = router;
