@@ -167,6 +167,65 @@
         </div>
       </div>
  
+
+        <script>
+          // switch article as draft or publish
+          function updatePostType(articleId, postType) {
+            axios
+              .put(`/author/article/${articleId}/${postType}`)
+              .then(function (res) {
+                console.log(res);
+                location.reload()
+              })
+              .catch(function (err) {
+                console.log(err);
+              });
+          }
+
+
+          
+          function postModal(articleId) {
+            const linkArticle = document.getElementById('linkArticle');
+            const openSharingLinkBtn = document.getElementById('openSharingLink');
+            //create URL
+            linkArticle.value = `${window.location.host}/article/${articleId}`;
+            //connect link to open button
+            openSharingLinkBtn.href = `/article/${articleId}`;
+          }
+
+          function copySharingLink() {
+            const linkArticle = document.getElementById('linkArticle');
+            navigator.clipboard.writeText(linkArticle.value)
+              .then(() => console.log('Shareable link copied successfully!'))
+              .catch(error => console.log('Failed to copy shareable link:', error));
+          }
+
+          
+          // confirmation for delete article 
+          function deleteArticle(articleId) {
+            const deleteArticleCheckBtn = document.getElementById('confirmDeleteBtn');
+            deleteArticleCheckBtn.addEventListener('click', function () {
+              deleteArticleCheck(articleId);
+            });
+          }
+
+          // deleting article
+          function deleteArticleCheck(articleId) {
+            axios
+              .delete(`/author/article/${articleId}`)
+              .then(function (res) {
+                console.log(res);
+                location.reload()
+              })
+              .catch(function (err) {
+                console.log(err);
+              });
+          }
+
+       
+
+          
+        </script>
       </div>
     </div>
     <%- include('../partials/footer') %>
