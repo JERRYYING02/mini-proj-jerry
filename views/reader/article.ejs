@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <div>
+      <%- include('../partials/header') %>
+      <!-- article detail -->
+      <div class="container">
+          <article class="col-md-12 less-transparent"">
+            <div class="article-box">
+              <h1 class="text-dark fw-bold " style=" text-decoration: underline;" >
+                <%= article.article_title %>
+              </h1>
+              <h3 class="text-dark d-block">
+                -<%=article.article_tags%>-
+              </h3>
+              <small class="text-dark"
+                > <%= article.article_published_time %> 
+              </small>
+              <small class="text-dark d-block" style="border-radius: 20px; margin-top:5px; width: 200px; background-color: rgba(0, 255, 238, 0.774)">
+                <p class="text-dark fw-bold">Author: <a href="/profile/<%= article.article_author %>"> <%= article.article_author %> </a></p>
+              </small>
+            
+             
+            </div>
+
+            <h3 class="card-title text-dark">
+              <%= article.article_subtitle %>
+            </h3>
+ 
+       
+            <div class="card-content-text text-dark p-5" style="border-radius: 20px; margin-top: 9px; background-color: rgba(241, 241, 241, 0.527);">
+
+              <%- decodeURIComponent(article.article_content) %>
+            
+            </div>
+           
+
+            <div class="btn-group" role="group">
+              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" onclick="likeArticle(<%= article.article_id %>)">
+                <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                <span class="badge text-bg-warning"><%= article.article_likes %></span>
+              </a>
+              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" onclick="emojiArticle('love')">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <span class="badge text-bg-warning"><%= article.emoji_love_counter %></span>
+              </a>
+              <a href="/article/<%= article.article_id %>" class="btn btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667)" data-article-id="<%= article.article_id %>" onclick="emojiArticle('haha')">
+                <i class="fa fa-smile-o" aria-hidden="true"></i>
+                <span class="badge text-bg-warning"><%= article.emoji_haha_counter %></span>
+              </a>
+             
+      
+              <button type="button" class="btn btn-comment btn-outline-dark"style="background-color: rgba(245, 222, 179, 0.667) " data-bs-toggle="collapse" data-bs-target="#comment-form-collapse" aria-expanded="true" aria-controls="comment-form-collapse">
+                <i class="fa fa-comment" aria-hidden="true"></i> Comment
+              </button>
+            </div>
+
+            <div class="my-3">
+              <a href="/" class="btn btn-primary" >Back</a>
+            </div>
+
+      </div>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
