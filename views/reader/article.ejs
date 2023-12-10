@@ -133,6 +133,92 @@
               </div>
             </div>
           </div>
+
+          <!-- Axios for sending comment form -->
+          <script>
+            function postComment(article_id) {
+            const commentName = document.getElementById('comment-name').value;
+            const commentContent = document.getElementById('comment-text').value;
+
+            axios
+              .post(`/article/${article_id}/comment`, {
+                comment_name: commentName,
+                comment_content: commentContent,
+              })
+              .then(function (res) {
+                console.log(res.data);
+              })
+              .catch(function (err) {
+                console.log(err);
+              });
+            }
+
+            // article like
+            function likeArticle() {
+              axios
+                .put('/article/<%= article.article_id %>/like')
+                .then(function (res) {
+                  location.reload();
+                  console.log(res.data);
+                })
+                .catch(function (err) {
+                  console.log(err);
+                });
+            }
+
+
+            // comment like
+            function likeComment(comment_id) {
+              axios
+                .put(`/article/<%= article.article_id %>/comment/${comment_id}/like`)
+                .then(function (res) {
+                  location.reload();
+                  console.log(res.data);
+                })
+                .catch(function (err) {
+                  console.log(err);
+                });
+            }
+
+            // delete comment
+            function deleteComment(comment_id) {
+              const deleteCommentCheckBtn = document.getElementById(
+                'delete-comment-confirm-btn'
+              );
+              deleteCommentCheckBtn.setAttribute(
+                'onclick',
+                `deleteCommentCheck(${comment_id})`
+              );
+            }
+
+            // delete comment confirm
+            function deleteCommentCheck(comment_id) {
+              axios
+                .delete(`/article/<%= article.article_id %>/comment/${comment_id}/delete`)
+                .then(function (res) {
+                  console.log(res.data);
+                  location.reload();
+                })
+                .catch(function (err) {
+                  console.log(err);
+                });
+            }
+
+          // emoji article
+          function emojiArticle(emoji) {
+            axios
+              .put(`/article/<%= article.article_id %>/emoji/${emoji}`)
+              .then(function (res) {
+                console.log(res.data);
+                location.reload();
+              })
+              .catch(function (err) {
+                console.log(err);
+              });
+          }
+
+
+          </script>
       </div>
     </div>
     <%- include('../partials/footer') %>
