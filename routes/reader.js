@@ -163,5 +163,20 @@ router.put('/article/:article_id/like', (req, res) => {
   });
 });
 
+// Comment article functionality
+router.post('/article/:article_id/comment', (req, res) => {
+  const article_id = req.params.article_id;
+  const { comment_name, comment_content } = req.body;
+
+  db.query('INSERT INTO article_comments (comment_name, comment_content, article_id) VALUES (?, ?, ?)', [comment_name, comment_content, article_id], (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error adding comment' });
+    } else {
+      res.json({ message: 'Comment added successfully' });
+    }
+  });
+});
+
 
 module.exports = router;
