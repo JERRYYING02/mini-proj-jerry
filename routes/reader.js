@@ -80,5 +80,26 @@ router.get('/articles', (req, res) => {
   });
 });
 
+// Add a new route to view a user's profile
+router.get('/profile/:username', (req, res) => {
+  const username = req.params.username;
+  
+  // Query the users table to get the user's bio
+  db.query('SELECT bio FROM users WHERE username = ?', [username], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving user bio' });
+    } else {
+      if (result.length === 1) {
+        // Render the user's profile page, passing the bio
+        const bio = result[0].bio;
+        res.render('reader/profilePage.ejs', { username, bio });
+      } else {
+        // Handle case when user does not exist
+        res.status(404).json({ message: 'User not found' });
+      }
+    }
+  });
+});
 
 module.exports = router;
