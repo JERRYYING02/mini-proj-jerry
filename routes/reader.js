@@ -137,4 +137,31 @@ router.get('/article/:article_id', (req, res) => {
 
 
 
+// Article like functionality
+router.put('/article/:article_id/like', (req, res) => {
+  const article_id = req.params.article_id;
+
+  db.query('SELECT * FROM articles WHERE article_id = ?', [article_id], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving article' });
+    } else if (result.length === 1) {
+      const article = result[0];
+      const likes = article.article_likes+1;
+
+      db.query('UPDATE articles SET article_likes = ? WHERE article_id = ?', [likes, article_id], (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Error updating article likes' });
+        } else {
+          res.json({ message: 'Article like successfully' });
+        }
+      });
+    } else {
+      res.status(404).json({ message: 'Article not found' });
+    }
+  });
+});
+
+
 module.exports = router;
