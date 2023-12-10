@@ -127,6 +127,46 @@
           </div>
         </div>
 
+      <!-- Modal for sharing link -->
+      <div class="modal fade" id="shareableLink">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Sharing Link</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" id="linkArticle" value="">
+                <button class="btn btn-primary" type="button" id="sharinglink-btncopy" onclick="copySharingLink()">Copy</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn btn-primary" id="openSharingLink">Open</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal for article delete confirmation -->
+      <div class="modal fade" id="deleteArticle" aria-labelledby="deleteArticleLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="deleteArticleLabel">Delete Article</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure to delete this article?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
       </div>
     </div>
     <%- include('../partials/footer') %>
