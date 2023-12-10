@@ -178,5 +178,29 @@ router.post('/article/:article_id/comment', (req, res) => {
   });
 });
 
+// Like comment functionality
+router.put('/article/:article_id/comment/:comment_id/like', (req, res) => {
+  const comment_id = req.params.comment_id;
+
+  db.query('SELECT * FROM article_comments WHERE comment_id = ?', [comment_id], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving comment' });
+    } else if (result.length === 1) {
+      const comment = result[0];
+      const likes = comment.comment_likes +1;
+      db.query('UPDATE article_comments SET comment_likes = ? WHERE comment_id = ?', [likes, comment_id], (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Error updating comment likes' });
+        } else {
+          res.json({ message: 'Comment liked successfully' });
+        }
+      });
+    } else {
+      res.status(404).json({ message: 'Comment not found' });
+    }
+  });
+});
 
 module.exports = router;
