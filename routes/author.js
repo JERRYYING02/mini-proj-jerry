@@ -144,7 +144,44 @@ router.post('/signup', [
   });
 });
 
+// Login route
+router.get('/login', (req, res) => {
+  res.render('author/login');
+});
 
+router.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  db.query('SELECT * FROM users WHERE username = ?', [username], (err, user) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving user' });
+    } else if (user.length === 0) {
+      res.status(401).json({ message: 'User not found' });
+    } else {
+      bcrypt.compare(password, user[0].password, (err, result) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Error comparing passwords' });
+        } else if (result) {
+          req.session.user = {
+            username: user[0].username,
+          };
+          res.json({ message: 'Login successful' });
+        } else {
+          res.status(401).json({ message: 'Invalid username or password' });
+        }
+      });
+    }
+  });
+});
+
+// Logout route
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    res.redirect('/author/login');
+  });
+});
 
 
 module.exports = router;
