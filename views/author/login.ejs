@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  
+<body>
+  <%- include('../partials/header') %>
+  <div class="container d-flex flex-column justify-content-center align-items-center vh-90">
+    <h1>Login</h1>
+    <form id="loginForm" class="w-50">
+      <div class="mb-3">
+        <label for="username">Email</label>
+        <input type="email" class="form-control" id="username" required>
+        <small class="text-danger" id="emailError"></small>
+      </div>
+      <div class="mb-3">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <small class="mt-3 text-light">Don't have an account?</small>
+    <a href="/author/signup" class="btn btn-warning mt-3">Sign in to account</a>
+  </div>
+
+  <script>
+    // Login form submission
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      axios.post('/author/login', { username, password })
+        .then((response) => {
+          // Handle successful login,redirect to author
+          alert('Sucessfully login !');
+          window.location.href = '/author';
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          alert('User not found !');
+          console.error(error.response.data.message);
+        });
+    });
+  </script>
+  <%- include('../partials/footer') %>
+</body>
+</html>
