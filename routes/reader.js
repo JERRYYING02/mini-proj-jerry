@@ -203,4 +203,17 @@ router.put('/article/:article_id/comment/:comment_id/like', (req, res) => {
   });
 });
 
+// Delete Comment
+router.delete('/article/:article_id/comment/:comment_id/delete', (req, res) => {
+  const comment_id = req.params.comment_id;
+  db.query('DELETE FROM article_comments WHERE comment_id = ?', [comment_id], (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error deleting comment' });
+    } else {
+      res.json({ message: 'Comment deleted successfully' });
+    }
+  });
+});
+
 module.exports = router;
