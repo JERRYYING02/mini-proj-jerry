@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body>
+  <div>
+    <%- include('../partials/header') %>
+    <div class="container wrapper">
+      <div class="row">
+        <div class="col-md-12">
+         <div class="wrapper">
+          <div class="news-carousel">
+            <div class="title-box">
+                <h5 id="title-heading" class="text-center">Latest News</h5>
+              </div>
+            <div class="carousel">
+              <% newsData.slice(0, 3).forEach(news => { %> <!-- Limit to the first 3 news articles -->
+                <div class="news-item">
+                  <small><a href="<%= news.url %>"><%= news.title %></a></small>
+                  <small><small>Published at: <%= news.publishedAt %></small></small>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+        <div class="search-bar">
+
+            <form id="search-form">
+               
+              <input type="text" id="search-input" placeholder="Search articles">
+              <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2">Search</button>
+            </form>
+    
+            <select class="form-select" id="article-tags-select" onchange="filterArticlesByTag()">
+              <option value="">All Tags</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Education">Education</option>
+              <option value="Travel">Travel</option>
+              <option value="Science & Technology">Technology</option>
+              <option value="Food">Food</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Fashion">Fashion</option>
+              <option value="Business">Business</option>
+              <option value="Books">Books</option>
+            </select>
+          
+          </div>
+
+        
+          <!-- Container to hold the cards -->
+          
+            <div id="card-container" class="grid row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4  align-items-center justify-content-center">
+                <% if (articles.length === 0) { %>
+                  <div class="col text-center">
+                    <h3 class="mt-5">Unfortunately, no articles are published!</h3>
+                  </div>
+                <% } %>
+    
+                <% articles.forEach(function(article) { %>
+                  <div class="col card-box" data-tags="<%= article.article_tags %>">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <a href="/article/<%= article.article_id %>">
+
+                        <h5 class="card-title"><%= article.article_title %></h5>
+                        <h6 class="card-title"><%= article.article_tags %></h6>
+                        <p class="card-content-text">
+                          <small class="text-secondary">Date: <%= article.article_published_time %></small>
+                          <br>
+                         
+                        </p>
+                        <p class="card-content-text"><%= article.article_subtitle %></p>          
+                        
+                        <p class="card-content-text"></p>
+                        <!-- log article like,visits -->
+                        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                            <span class="badge text-bg-warning"><%= article.article_likes %></span>
+                          <i class="fa fa-eye" aria-hidden="true"></i>
+                            <span class="badge text-bg-info"><%= article.article_visits %></span>
+                        </p>
+                        </p>
+                      </a>
+                     </div>
+                    </div>
+                  </div>
+                <% }) %>
+               
+              </div>
+          </div>
+
+          <!-- "Load More" button -->
+          <div class="text-center mt-4" style="margin-bottom: 5px;">
+            <button id="load-more-button" class="btn btn-primary">Load More</button>
+            <button id="back-to-home" class="btn btn-info " href="/"><a href="/">Main Page</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>
