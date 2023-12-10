@@ -271,4 +271,30 @@ router.put('/editArticle/:article_id', (req, res) => {
   );
 });
 
+// Update status of published and drafted articles
+router.put('/article/:article_id/:action', (req, res) => {
+  const article_id = req.params.article_id;
+  const selectedParam = req.params.action;
+
+  let query, status;
+  if (selectedParam === 'publish') {
+    query = 'UPDATE articles SET article_status = ?, article_published_time = CURRENT_TIMESTAMP WHERE article_id = ?';
+    status = true; // Set status to true for "Published"
+  } else if (selectedParam === 'draft') {
+    query = 'UPDATE articles SET article_status = ?, article_last_modified = CURRENT_TIMESTAMP WHERE article_id = ?';
+    status = false; // Set status to false for "Draft"
+  } else {
+    return res.status(400).json({ message: 'Invalid params' });
+  }
+
+  db.query(query, [status, article_id], (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error updating article status' });
+    } else {
+      res.json({ message: 'Article status successfully updated' });
+    }
+  });
+});
+
 module.exports = router;
