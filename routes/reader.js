@@ -258,4 +258,22 @@ router.put('/article/:article_id/emoji/:emoji', (req, res) => {
   });
 });
 
+// Add a new route for searching articles
+router.get('/search', (req, res) => {
+  const query = req.query.query.toLowerCase().trim();
+
+  // Query the database to find articles that match the query
+  const sql = "SELECT article_title FROM articles WHERE article_title LIKE ?";
+  const params = [`%${query}%`];
+
+  db.query(sql, params, (err, results) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error searching for articles' });
+    } else {
+      res.json(results); // Respond with the matching article titles
+    }
+  });
+});
+
 module.exports = router;
