@@ -1,0 +1,60 @@
+
+<header class="py-3" style="background-color: rgba(0, 0, 0, 0.8);">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="d-flex flex-column">
+        
+        <h1 class="text-light fs-6">
+         @ Wripts  
+        </h1>
+        <small class="text-light fs-6">
+       Your minimalistic blog.
+        </small>
+        <a href="/about" class="btn btn-outline-secondary mt-2">About Us</a>
+
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <div class="btn-group me-3 mt-3" role="group">
+            <a href="/" class="btn btn-outline-primary readerBtn" >Reader<small> <br>Explore</small></a>
+            <a href="/author" class="btn btn-outline-info authorBtn">Author <small> <br>For writers</small></a>
+            <a
+            href="/author/blogPageSettings"
+            class="btn btn-light d-none setting_btn "
+          >
+            Settings
+            <small> <br>Profile</small>
+          </a>
+          </div>
+          
+          <script>
+            // settings button only show on author page
+            const settingBtn = document.querySelector('.setting_btn')
+            const authorBtn = document.querySelector('.authorBtn')
+            const readerBtn = document.querySelector('.readerBtn')
+            if (window.location.pathname.match('/author')) {
+              settingBtn.classList.remove('d-none')
+              authorBtn.classList.add('active')
+            }
+            else{
+              readerBtn.classList.add('active')
+            }
+          </script>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+
+
+
+
+
+
+
+
