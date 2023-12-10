@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <div>
+      <%- include('../partials/header') %>
+
+      <!-- title -->
+      <div class="container wrapper">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="title-box">
+              <h1 id="title-heading">Author's Article</h1>
+            </div>
+          </div>
+        </div>
+
+         <!-- drafts -->
+         <div class="row mx-2">
+          <div class="d-flex justify-content-between align-items-center my-3">
+        
+            <a class="btn btn-primary " href="/author/createNewArticle">Create new draft</a>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-warning table-hover" >
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Tag</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Likes</th>
+                  <th scope="col">Created On<small>  (UTC+0)</small></th>
+                  <th scope="col">Last Modified</th>
+                  <th scope="col">Modify</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% draft_articles.forEach(article => {
+                  if (article.article_author === req.session.user.username) { // Compare article author with logged-in user
+                %>
+                <tr>
+                  <td><%= article.article_title %></td>
+                  <td><%= article.article_tags %></td>
+                  <td><%= article.article_author %></td>
+                  <td><%= article.article_likes %></td>
+                  <td><small><%= article.article_created_time %></small></td>
+                  <td><small><%= article.article_last_modified %></small></td>
+                  <td>
+                    <div class="d-flex gap-2">
+                      <a href="/author" class="btn btn-warning" onclick="updatePostType(<%= article.article_id %>, 'publish')">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        Publish
+                      </a>
+                      <a href="/author/editArticle/<%= article.article_id %>" class="btn btn-primary">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        Edit
+                      </a>
+                      
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteArticle" onclick="deleteArticle(<%= article.article_id %>)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <% } }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
