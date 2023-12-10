@@ -183,5 +183,35 @@ router.get('/logout', (req, res) => {
   });
 });
 
+// Blog settings
+router.get('/blogPageSettings', checkAuthentication,(req, res) => {
+  const username = req.session.user.username;
+  db.query('SELECT bio FROM users WHERE username = ?', [username], (err, user) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error retrieving user bio' });
+    } else {
+      res.render('author/blogPageSettings', {
+        username,
+        userBio: user[0].bio, // Pass the user's bio to the template
+      });
+    }
+  });
+});
+
+
+router.put('/blogPageSettings', (req, res) => {
+  const { blog_subtitle } = req.body;
+  const username = req.session.user.username;
+
+  db.query(
+    'UPDATE users SET bio = ? WHERE username = ?',
+    [blog_subtitle, username],
+    (err) => {
+      res.json({ message: 'Blog settings successfully updated' });
+    }
+  );
+});
+
 
 module.exports = router;
