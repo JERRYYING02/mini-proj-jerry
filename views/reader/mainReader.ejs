@@ -23,6 +23,20 @@
               <% }) %>
             </div>
           </div>
+          <div class="d-flex justify-content-end">
+          <div class="weather-container rounded p-2  " style="max-width: 500px; background-color: antiquewhite;">
+            <!-- weather information -->
+           
+            <% if (temperature && city) { %>
+              <p>Current temp  <i class="fa fa-sun-o" aria-hidden="true"></i></p>
+              <p> Location : <%= city %> </p>
+              <p>  <%= temperature %>°C </p>
+            <% } else { %>
+                <p>Weather data invalid</p>
+            <% } %>
+        </div>
+      </div>
+
         </div>
         <div class="search-bar">
 
@@ -167,6 +181,8 @@
 
       
     });
+
+    
   </script>
 </body>
 </html>

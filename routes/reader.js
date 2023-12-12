@@ -21,34 +21,52 @@ db.connect((err) => {
   }
 });
 
-router.get('/', (req, res) => {
-  // Fetch news data
-  const apiKey = process.env.NEWS_API_KEY; 
-  const apiUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=business';
+// main reader route
+router.get('/', async (req, res) => {
+  const apiKeyWeather = process.env.WEATHER_API_KEY; 
+  try {
 
-  axios.get(apiUrl, {
-    headers: {
-      'X-Api-Key': apiKey,
-    },
-  })
-    .then(newsResponse => {
-      const newsData = newsResponse.data.articles;
+    // geolocation API to get user's location
+    const cityResponse = await axios.get('https://ipapi.co/json/');
+    const city = cityResponse.data.city;
 
-      // Fetch articles
-      db.query("SELECT * FROM articles WHERE article_status=true ORDER BY article_published_time DESC", (err, articles) => {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ message: 'Error retrieving articles' });
-        } else {
-          res.render('reader/mainReader.ejs', { articles, newsData });
-        }
-      });
+    // request to the OpenWeatherMap API
+    const tempResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyWeather}&units=metric`);
+    const temperature = tempResponse.data.main.temp;
+
+    // Fetch news data
+    const apiKey = process.env.NEWS_API_KEY; 
+    const apiUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=business';
+
+    axios.get(apiUrl, {
+      headers: {
+        'X-Api-Key': apiKey,
+      },
     })
-    .catch(error => {
-      console.error(error);
-      res.status(500).json({ message: 'Error fetching news data' });
-    });
+      .then(newsResponse => {
+        const newsData = newsResponse.data.articles;
+        // Fetch articles
+        db.query("SELECT * FROM articles WHERE article_status=true ORDER BY article_published_time DESC", (err, articles) => {
+          if (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Error retrieving articles' });
+          } else {
+            //show city info also
+            res.render('reader/mainReader.ejs', { articles, newsData, temperature,city  });
+          }
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching news data' });
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching weather data' });
+  }
 });
+
+
 
 //get about page
 router.get('/about', (req, res) => {
