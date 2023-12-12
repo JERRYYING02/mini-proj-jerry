@@ -28,12 +28,12 @@ router.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: true,
       httpOnly: true,
       maxAge: 3600000, //1 hour 
     },
   })
 );
+
 // check if the user is authenticated
 const checkAuthentication = (req, res, next) => {
   if (req.session.user) {
@@ -41,12 +41,13 @@ const checkAuthentication = (req, res, next) => {
     next();
   } else {
     // Redirect to login
-    res.redirect('/author/login');
+    res.redirect('author/login');
   }
 };
 
+
 // Get all articles
-router.get('/', checkAuthentication, (req, res) => {
+router.get('/',checkAuthentication, (req, res) => {
   db.query(
     "SELECT * FROM articles WHERE article_status=true ORDER BY article_last_modified DESC",
     (err, published_articles) => {
@@ -75,6 +76,7 @@ router.get('/', checkAuthentication, (req, res) => {
     }
   );
 });
+
 
 // Signup route
 router.get('/signup', (req, res) => {
@@ -148,7 +150,6 @@ router.post('/signup', [
       });
   });
 });
-
 // Login route
 router.get('/login', (req, res) => {
   res.render('author/login');
@@ -172,7 +173,8 @@ router.post('/login', (req, res) => {
           req.session.user = {
             username: user[0].username,
           };
-          res.json({ message: 'Login successful' });
+          // Redirect to the home page after successful login
+          res.json({ message: 'User successfully logged in' })
         } else {
           res.status(401).json({ message: 'Invalid username or password' });
         }
@@ -180,6 +182,8 @@ router.post('/login', (req, res) => {
     }
   });
 });
+
+
 
 // Logout route
 router.get('/logout', (req, res) => {
@@ -189,7 +193,7 @@ router.get('/logout', (req, res) => {
 });
 
 // Blog settings
-router.get('/blogPageSettings', checkAuthentication,(req, res) => {
+router.get('/blogPageSettings',(req, res) => {
   const username = req.session.user.username;
   db.query('SELECT bio FROM users WHERE username = ?', [username], (err, user) => {
     if (err) {
