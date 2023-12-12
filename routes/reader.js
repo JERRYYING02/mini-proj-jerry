@@ -29,11 +29,12 @@ router.get('/', async (req, res) => {
     // geolocation API to get user's location
     const cityResponse = await axios.get('https://ipapi.co/json/');
     const city = cityResponse.data.city;
-
+    const lat = cityResponse.data.latitude;
+    const long = cityResponse.data.longitude;
     // request to the OpenWeatherMap API
-    const tempResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyWeather}&units=metric`);
+    const tempResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKeyWeather}&units=metric`);
     const temperature = tempResponse.data.main.temp;
-
+    console.log(tempResponse)
     // Fetch news data
     const apiKey = process.env.NEWS_API_KEY; 
     const apiUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=business';
