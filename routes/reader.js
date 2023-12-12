@@ -1,5 +1,7 @@
+
 const express = require('express');
 const router = express.Router();
+const requestIp = require('request-ip');
 const mysql = require('mysql');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
@@ -21,13 +23,17 @@ db.connect((err) => {
   }
 });
 
+
+const getClientIp = (req) => requestIp.getClientIp(req) || req.connection.remoteAddress;
+console.log(getClientIp)
+
 // main reader route
 router.get('/', async (req, res) => {
-  
+  const clientIp = getClientIp(req);
+  console.log(clientIp)
   try {
-
     // geolocation API to get user's location
-    const cityResponse = await axios.get('https://ipapi.co/json/');
+    const cityResponse = await axios.get(`https://ipapi.co/${clientIp}/json/`);
     const city = cityResponse.data.city;
     const lat = cityResponse.data.latitude;
     const lon = cityResponse.data.longitude;
