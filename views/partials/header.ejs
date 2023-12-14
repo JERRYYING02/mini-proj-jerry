@@ -21,22 +21,14 @@
           <div class="btn-group me-3 mt-3" role="group">
             <a href="/" class="btn btn-outline-primary readerBtn" >Reader<small> <br>Explore</small></a>
             <a href="/author" class="btn btn-outline-info authorBtn">Author <small> <br>For writers</small></a>
-            <a
-            href="/author/blogPageSettings"
-            class="btn btn-light d-none setting_btn "
-          >
-            Settings
-            <small> <br>Profile</small>
-          </a>
           </div>
           
           <script>
+
             // settings button only show on author page
-            const settingBtn = document.querySelector('.setting_btn')
             const authorBtn = document.querySelector('.authorBtn')
             const readerBtn = document.querySelector('.readerBtn')
             if (window.location.pathname.match('/author')) {
-              settingBtn.classList.remove('d-none')
               authorBtn.classList.add('active')
             }
             else{
