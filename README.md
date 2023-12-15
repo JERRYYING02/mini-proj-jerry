@@ -10,3 +10,7 @@ GitHub link repository: https://github.com/JERRYYING02/mini-proj-jerry
 
 ALTERNATIVE LOGIN USERNAME: jerrychng@gmail.com
 password: abc12345!
+
+In case things have to be run locally
+you would need to remove ip related weatherapi and do -
+npm run start
