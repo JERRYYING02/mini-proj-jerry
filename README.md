@@ -14,3 +14,5 @@ password: abc12345!
 In case things have to be run locally
 you would need to remove ip related weatherapi and do -
 npm run start
+
+Any problem please email me at : ychng001@gold.ac.uk
